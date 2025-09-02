@@ -131,7 +131,7 @@
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
-            min-height: 120px; /* Uniform height for all cards */
+            min-height: 120px;
         }
         .problem-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.07); }
         
@@ -153,7 +153,7 @@
             display: flex; 
             align-items: center; 
             gap: 15px;
-            margin: auto 0; /* Vertical centering */
+            margin: auto 0;
         }
         .problem-card__icon { font-size: 1.5rem; }
         .problem-card__title { font-family: var(--font-headline); font-size: 1.2rem; font-weight: 700; }
@@ -191,7 +191,24 @@
         .offer-card__title { font-family: var(--font-headline); font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; color: var(--accent-blue); }
         .offer-card__description { color: var(--text-dark); font-size: 0.95rem; }
         .social-proof { color: var(--text-light); margin-top: 2rem; }
-        .social-proof span { color: var(--accent-blue); font-weight: 700; font-size: 1.1rem; }
+        .social-proof span { 
+            color: var(--accent-blue); 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            display: inline-block;
+            min-width: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Loading animation for counter */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .social-proof span.loading {
+            animation: pulse 1s ease-in-out infinite;
+        }
         
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
@@ -199,9 +216,8 @@
             .scroll-container { scroll-snap-type: none; overflow: auto; }
             .audience-columns { grid-template-columns: 1fr; }
             
-            /* Show problem descriptions by default on mobile */
             .problem-card {
-                min-height: auto; /* Remove fixed height */
+                min-height: auto;
             }
             .problem-card__description {
                 max-height: 300px;
@@ -209,7 +225,7 @@
                 margin-top: 15px;
             }
              .problem-card__header {
-                margin: 0; /* Remove centering */
+                margin: 0;
             }
         }
     </style>
@@ -223,7 +239,7 @@
                 <h1>Stop Fighting Your Keyboard.</h1>
                 <h2>Finally, a keyboard that keeps up with your multilingual brain.</h2>
                 <div class="hero-cta-wrapper">
-                    <a href="https://form.typeswitch.io" class="cta-button" target="_blank">
+                    <a href="https://form.typeswitch.io" class="cta-button">
                         Become a Founding User & Get 25% Off
                     </a>
                     <p class="microcopy">No commitment. Help shape the future of typing.</p>
@@ -307,18 +323,89 @@
                         <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 25% discount code.</p>
                     </div>
                 </div>
-                <a href="https://form.typeswitch.io" class="cta-button" target="_blank">
+                <a href="https://form.typeswitch.io" class="cta-button">
                     Take the 3-Minute Survey
                 </a>
                 <p class="social-proof">
-                    Join the <span>127</span> multilingual pros who have already completed the survey and helped shape our keyboard.
+                    Join the <span id="survey-count" class="loading">...</span> multilingual pros who have already completed the survey and helped shape our keyboard.
                 </p>
             </div>
         </section>
 
     </div>
 
+    <!-- Supabase Integration for Counter -->
+    <script type="module">
+        // Supabase configuration
+        const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
+        
+        // Import Supabase client
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        
+        // Initialize Supabase client
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Base count (starting from 60 as requested)
+        const BASE_COUNT = 60;
+        
+        // Function to update counter
+        async function updateSurveyCount() {
+            try {
+                // Get count of survey responses with discount codes (completed surveys)
+                const { count, error } = await supabase
+                    .from('survey_responses')
+                    .select('*', { count: 'exact', head: true })
+                    .not('discount_code', 'is', null);
+                
+                if (error) {
+                    console.error('Error fetching count:', error);
+                    // Use fallback number if error
+                    document.getElementById('survey-count').textContent = '127';
+                    document.getElementById('survey-count').classList.remove('loading');
+                    return;
+                }
+                
+                // Calculate total with base count
+                const totalCount = BASE_COUNT + (count || 0);
+                
+                // Update the counter with animation
+                const counterElement = document.getElementById('survey-count');
+                counterElement.classList.remove('loading');
+                
+                // Animate the number change
+                const currentValue = parseInt(counterElement.textContent) || 0;
+                const targetValue = totalCount;
+                const increment = Math.ceil((targetValue - currentValue) / 20);
+                
+                if (currentValue !== targetValue) {
+                    let current = currentValue;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= targetValue) {
+                            current = targetValue;
+                            clearInterval(timer);
+                        }
+                        counterElement.textContent = current;
+                    }, 50);
+                } else {
+                    counterElement.textContent = totalCount;
+                }
+                
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                // Use fallback number if error
+                document.getElementById('survey-count').textContent = '127';
+                document.getElementById('survey-count').classList.remove('loading');
+            }
+        }
+        
+        // Update count on page load
+        updateSurveyCount();
+        
+        // Refresh count every 30 seconds
+        setInterval(updateSurveyCount, 30000);
+    </script>
+
 </body>
 </html>
-
-
