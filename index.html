@@ -209,6 +209,51 @@
         .social-proof span.loading {
             animation: pulse 1s ease-in-out infinite;
         }
+
+        /* ----- STYLE CHANGES START HERE ----- */
+
+        /* This wrapper helps organize the main content and the footer within the section */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* This makes the main container take up available space, pushing the footer down */
+        .content-wrapper .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 20px; /* Add some space above the footer */
+        }
+        
+        /* The new footer style */
+        .page-footer {
+            flex-shrink: 0; /* Prevents the footer from shrinking */
+            background-color: var(--border-color); /* Slightly darker background as requested */
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-radius: 12px; /* A subtle rounding to match the design */
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .page-footer a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .page-footer a:hover {
+            color: var(--text-dark);
+        }
+        
+        /* ----- STYLE CHANGES END HERE ----- */
         
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
@@ -226,6 +271,16 @@
             }
              .problem-card__header {
                 margin: 0;
+            }
+
+            /* Adjust wrapper for mobile */
+            .content-wrapper .container {
+                padding-bottom: 40px; 
+            }
+
+            .page-footer {
+                margin-top: 20px; /* Give it some space on mobile */
+                padding: 20px;
             }
         }
     </style>
@@ -307,34 +362,41 @@
         </section>
         
         <section class="scroll-section offer">
-            <div class="container">
-                <h2 class="section-title">Your Input is a Game-Changer.</h2>
-                <div class="offer-grid">
-                    <div class="offer-card">
-                        <h3 class="offer-card__title">Your Voice, Our Blueprint.</h3>
-                        <p class="offer-card__description">Your survey answers are the blueprint for the keyboard you've always wanted. Prioritize the features that matter most to YOU.</p>
+            <div class="content-wrapper">
+                <div class="container">
+                    <h2 class="section-title">Your Input is a Game-Changer.</h2>
+                    <div class="offer-grid">
+                        <div class="offer-card">
+                            <h3 class="offer-card__title">Your Voice, Our Blueprint.</h3>
+                            <p class="offer-card__description">Your survey answers are the blueprint for the keyboard you've always wanted. Prioritize the features that matter most to YOU.</p>
+                        </div>
+                        <div class="offer-card">
+                            <h3 class="offer-card__title">Join the Inner Circle.</h3>
+                            <p class="offer-card__description">As a Founding User, you're part of the team. You'll get exclusive updates and be the first to own the final product.</p>
+                        </div>
+                        <div class="offer-card">
+                            <h3 class="offer-card__title">A Worthy Thank You.</h3>
+                            <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 25% discount code.</p>
+                        </div>
                     </div>
-                    <div class="offer-card">
-                        <h3 class="offer-card__title">Join the Inner Circle.</h3>
-                        <p class="offer-card__description">As a Founding User, you're part of the team. You'll get exclusive updates and be the first to own the final product.</p>
-                    </div>
-                    <div class="offer-card">
-                        <h3 class="offer-card__title">A Worthy Thank You.</h3>
-                        <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 25% discount code.</p>
-                    </div>
+                    <a href="https://form.typeswitch.io" class="cta-button">
+                        Take the 3-Minute Survey
+                    </a>
+                    <p class="social-proof">
+                        Join the <span id="survey-count" class="loading">...</span> multilingual pros who have already completed the survey and helped shape our keyboard.
+                    </p>
                 </div>
-                <a href="https://form.typeswitch.io" class="cta-button">
-                    Take the 3-Minute Survey
-                </a>
-                <p class="social-proof">
-                    Join the <span id="survey-count" class="loading">...</span> multilingual pros who have already completed the survey and helped shape our keyboard.
-                </p>
+                
+                <footer class="page-footer">
+                    © 2025 TypeSwitch Ltd. All rights reserved. | 
+                    Contact: <a href="mailto:contact@typeswitch.io">contact@typeswitch.io</a> | 
+                    Investors: <a href="mailto:investors@typeswitch.io">investors@typeswitch.io</a>
+                </footer>
             </div>
-        </section>
+            </section>
 
     </div>
 
-    <!-- Supabase Integration for Counter -->
     <script type="module">
         // Supabase configuration
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
