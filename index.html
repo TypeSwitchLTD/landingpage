@@ -57,6 +57,8 @@
             max-width: 1100px;
             margin: 0 auto;
             text-align: center;
+            position: relative; /* Ensure content is on top of pseudo-elements */
+            z-index: 2;
         }
 
         @keyframes fadeIn {
@@ -118,9 +120,13 @@
             text-decoration: none;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 5px 20px rgba(0, 122, 255, 0.3);
+            border: none;
+            cursor: pointer;
         }
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 122, 255, 0.4); }
         
+        .hero .microcopy { margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
+
         .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 40px; font-weight: 700; }
         .problems { background-color: var(--bg-secondary); }
         
@@ -223,6 +229,7 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
         .investors-link:hover {
             background-color: var(--text-dark);
@@ -260,9 +267,24 @@
             font-weight: 700;
         }
         
+        /* ----- STYLE CHANGE FOR IMAGE ----- */
         .different {
-            background-color: var(--bg-main);
+            position: relative;
+            overflow: hidden;
         }
+        .different::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://i.ibb.co/zHHkLGKD/Copy-of-num-433.png');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.5) rotate(15deg);
+            z-index: 1;
+        }
+
         .different-text {
             max-width: 750px;
             margin: 0 auto;
@@ -302,12 +324,13 @@
             display: inline-block;
             min-width: 30px;
         }
-        .investor-pitch-link a {
+        .investor-pitch-link .link-text {
             color: var(--accent-blue);
             font-weight: 500;
             text-decoration: none;
+            cursor: pointer;
         }
-        .investor-pitch-link a:hover {
+        .investor-pitch-link .link-text:hover {
             text-decoration: underline;
         }
         
@@ -327,8 +350,114 @@
         .page-footer a:hover {
             color: var(--text-dark);
         }
+
+        .pain-point-emphasis {
+            display: block;
+            margin-top: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            color: var(--accent-blue);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: left;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-content h3 {
+            font-family: var(--font-headline);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        .modal-form label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        .modal-form input[type="text"], 
+        .modal-form input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+        }
+         .modal-form input[type="text"]:focus,
+         .modal-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
         
-        /* MOBILE OPTIMIZATIONS */
+        .investor-form-fields {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+        }
+        .investor-form-fields.visible {
+            opacity: 1;
+            max-height: 200px;
+        }
+        
         @media (max-width: 768px) {
             .scroll-section { height: auto; min-height: 100vh; padding: 80px 20px; }
             .scroll-container { scroll-snap-type: none; overflow: auto; }
@@ -362,15 +491,16 @@
     <div class="scroll-container">
 
         <section class="scroll-section hero">
-            <a href="https://docsend.com/view/your-pitch-deck" target="_blank" class="investors-link">For Investors →</a>
+            <span class="investors-link" id="investors-button-top">For Investors →</span>
             <div class="container">
                 <h1>Stop Fighting Your Keyboard.</h1>
                 <h2>Finally, a keyboard that keeps up with your multilingual brain.</h2>
                 <p class="hero-sub-stat">Join 2.3 Billion Multilingual Typists Who Need This</p>
                 <div class="hero-cta-wrapper">
                     <a href="https://form.typeswitch.io" class="cta-button">
-                       First 200 Founding Users Get 30% Off
+                       First 200 Founding Users Get 20% Off
                     </a>
+                    <p class="microcopy">Survey is anonymous. Add your email for an extra 10% off!</p>
                     <div class="fomo-progress-bar">
                          <p class="progress-label"><span id="spots-taken" class="loading-state">...</span>/200 Founding Spots Taken</p>
                          <div class="progress-container">
@@ -387,7 +517,7 @@
                 <div class="problems-grid">
                      <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">⚠️</span><h3 class="problem-card__title">The Wrong Language Glitch</h3></div>
-                        <div class="problem-card__description"><p>You want to start an email with "Dear Daniel," but your fingers type<br><code>يثشق يشهثمو</code><br>You try to reply in your native language, but the letters appear in English. Oh no... switch, you delete, you lose your train of thought. Every. Single. Day. 10 times a day!</p></div>
+                        <div class="problem-card__description"><p>You want to start an email with "Hello Daniel," but your fingers type<br><code>יקךךם גשמןקך</code><br>because your keyboard is still set to Hebrew. You try to reply in Russian, but the letters appear in English. You sigh, switch, delete, and lose your train of thought.<span class="pain-point-emphasis">Every. Single. Day. 10 times a day!</span></p></div>
                     </div>
                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">⚡️</span><h3 class="problem-card__title">The Alt-Key Hijack</h3></div>
@@ -395,19 +525,19 @@
                     </div>
                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">🔍</span><h3 class="problem-card__title">The Symbol Hunt</h3></div>
-                        <div class="problem-card__description"><p>The @ in Arabic? Shift+2. Japanese question mark？Not where you think. Hebrew semicolon is the letter ף. French quotes « » nowhere to be found on QWERTY.</p></div>
+                        <div class="problem-card__description"><p>You need to type a formal Arabic phrase with vowels (Harakat), forcing you to hunt for <code>Shift+Q</code>, <code>Shift+A</code>, and <code>Shift+E</code> just for one word. You switch to Hebrew to end a sentence and type a <code>ץ</code> instead of a period. In Russian, the comma is hiding on the same key as the question mark. You're constantly breaking your flow just to type basic punctuation.</p></div>
                     </div>
                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">👀</span><h3 class="problem-card__title">The Visual Mismatch</h3></div>
-                        <div class="problem-card__description"><p>Russian В looks like B, lives on the D key. Greek Ρ looks like P, it's actually R. Cyrillic Н is not H, it's N. Your brain fights your fingers every time.</p></div>
+                        <div class="problem-card__description"><p>Your brain is fighting your fingers. The Russian <code>В</code> looks like a <code>B</code> but lives on the <code>D</code> key. The Cyrillic <code>Н</code> is <code>N</code>, not <code>H</code>. The Hebrew <code>ס</code> (Samekh) looks like an <code>O</code>, and <code>ו</code> (Vav) looks like a <code>I</code>, causing constant typos.</p></div>
                     </div>
                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">🤯</span><h3 class="problem-card__title">The Flow Killer</h3></div>
-                        <div class="problem-card__description"><p>Type. Check. Wrong. Delete. Switch. Retype. Mental momentum: gone. Creative thought: interrupted. Daily frustration: mounting. Productivity: just imagine.</p></div>
+                        <div class="problem-card__description"><p>Type. Check. Wrong. Delete. Switch. Retype.<br>Mental momentum: gone.<br>Creative thought: interrupted.<br>Daily frustration: mounting.<br>Productivity: just imagine.</p></div>
                     </div>
                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">🔒</span><h3 class="problem-card__title">The Caps Lock Trap</h3></div>
-                        <div class="problem-card__description"><p>CAPS on + switch to Arabic = no capital letters exist, keyboard confused. Russian CAPS + English = nothing works. Korean CAPS = broken syllables.</p></div>
+                        <div class="problem-card__description"><p>You hit <code>CAPS LOCK</code> by accident. Now, when you switch to Hebrew, it types in English. In Russian, you're stuck SHOUTING IN CYRILLIC. In Arabic, it does nothing until you switch back to English and realize your entire password was just typed in uppercase. The state is unpredictable, and the result is always frustration.</p></div>
                     </div>
                 </div>
             </div>
@@ -467,7 +597,7 @@
                         </div>
                         <div class="offer-card">
                             <h3 class="offer-card__title">A Worthy Thank You.</h3>
-                            <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 30% discount code.</p>
+                            <p class="offer-card__description">Your expert input is invaluable. For completing the anonymous survey, you'll get a 20% discount. Want a total of 30% off? Just leave your email at the end.</p>
                         </div>
                     </div>
                     <a href="https://form.typeswitch.io" class="cta-button">
@@ -478,8 +608,8 @@
                         <p class="social-proof">
                             Join the <span id="survey-count" class="loading-state">...</span> multilingual pros who have already completed the survey.
                         </p>
-                        <p class="investor-pitch-link" id="investors">
-                           Investors: Interested? <a href="https://docsend.com/view/your-pitch-deck" target="_blank">See our pitch deck →</a>
+                        <p class="investor-pitch-link">
+                           Investors: Interested? <span class="link-text" id="investors-button-bottom">See our pitch deck →</span>
                         </p>
                     </div>
                 </div>
@@ -488,21 +618,45 @@
             <footer class="page-footer">
                 <p class="copyright">
                      © 2025 TypeSwitch Ltd. All rights reserved. | 
-                    Contact: <a href="mailto:contact@typeswitch.io">contact@typeswitch.io</a>
+                    Contact: <a href="mailto:Michael@typeswitch.io">Michael@typeswitch.io</a>
                 </p>
             </footer>
         </section>
+    </div>
 
+    <div class="modal-overlay" id="investor-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close-button">&times;</span>
+            <h3>For Investors</h3>
+            <p>We're seeking $30k-$150k to finalize development and launch. If you're interested in backing the future of multilingual typing, we'd love to share more details.</p>
+            <form class="modal-form" id="investor-form">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="confirm-investment-range">
+                    <label for="confirm-investment-range">I confirm I understand the investment range of $30k-$150k is required.</label>
+                </div>
+                
+                <div class="investor-form-fields" id="investor-details-fields">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" name="name" required>
+                    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <button type="submit" class="cta-button">Send me info</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script type="module">
+        // Supabase Client Setup
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
-        
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        const BASE_COUNT = 73; // Starting base
+        // Counter Logic
+        const BASE_COUNT = 73;
         const FOUNDERS_GOAL = 200;
 
         async function updateSurveyCount() {
@@ -516,9 +670,7 @@
                     .select('*', { count: 'exact', head: true })
                     .not('discount_code', 'is', null);
                 
-                if (error) {
-                    throw error;
-                }
+                if (error) throw error;
                 
                 const totalCount = BASE_COUNT + (count || 0);
                 
@@ -532,20 +684,113 @@
                 
             } catch (err) {
                 console.error('Error fetching count:', err);
-                // Fallback numbers
-                spotsTakenEl.textContent = '84';
-                progressBarEl.style.width = `${(84 / FOUNDERS_GOAL) * 100}%`;
-                surveyCountEl.textContent = '84';
+                const fallbackCount = 84;
+                spotsTakenEl.textContent = fallbackCount;
+                progressBarEl.style.width = `${(fallbackCount / FOUNDERS_GOAL) * 100}%`;
+                surveyCountEl.textContent = fallbackCount;
                 spotsTakenEl.classList.remove('loading-state');
                 surveyCountEl.classList.remove('loading-state');
             }
         }
         
-        // Update count on page load
         updateSurveyCount();
-        
-        // Optional: Refresh count every 30 seconds
         setInterval(updateSurveyCount, 30000);
+
+        // Modal Logic
+        const investorModal = document.getElementById('investor-modal');
+        const investorBtnTop = document.getElementById('investors-button-top');
+        const investorBtnBottom = document.getElementById('investors-button-bottom');
+        const closeBtn = document.getElementById('modal-close-button');
+        const confirmCheckbox = document.getElementById('confirm-investment-range');
+        const investorDetailsFields = document.getElementById('investor-details-fields');
+
+        function openModal(e) {
+            e.preventDefault();
+            investorModal.style.display = 'flex';
+            confirmCheckbox.checked = false;
+            investorDetailsFields.classList.remove('visible');
+            document.getElementById('investor-form').reset();
+            
+            // Restore form if it was replaced by success message
+            const investorForm = document.getElementById('investor-form');
+            if (!investorForm.querySelector('button')) {
+                 investorForm.innerHTML = `
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="confirm-investment-range-inner">
+                        <label for="confirm-investment-range-inner">I confirm I understand the investment range of $30k-$150k is required.</label>
+                    </div>
+                    <div class="investor-form-fields" id="investor-details-fields-inner">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name-inner" name="name" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email-inner" name="email" required>
+                        <button type="submit" class="cta-button">Send me info</button>
+                    </div>`;
+                // Re-attach checkbox listener
+                document.getElementById('confirm-investment-range-inner').addEventListener('change', (event) => {
+                     document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
+                });
+            }
+        }
+
+        investorBtnTop.addEventListener('click', openModal);
+        investorBtnBottom.addEventListener('click', openModal);
+
+        closeBtn.addEventListener('click', () => {
+            investorModal.style.display = 'none';
+        });
+
+        investorModal.addEventListener('click', (event) => {
+            if (event.target === investorModal) {
+                investorModal.style.display = 'none';
+            }
+        });
+
+        confirmCheckbox.addEventListener('change', () => {
+            investorDetailsFields.classList.toggle('visible', confirmCheckbox.checked);
+        });
+
+        const investorForm = document.getElementById('investor-form');
+        investorForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const internalCheckbox = document.getElementById('confirm-investment-range') || document.getElementById('confirm-investment-range-inner');
+
+            if (!internalCheckbox.checked) {
+                alert('Please confirm you understand the investment range.');
+                return;
+            }
+
+            const submitButton = investorForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(investorForm);
+            const fullName = formData.get('name');
+            const email = formData.get('email');
+
+            try {
+                const { error } = await supabase
+                    .from('investor_leads')
+                    .insert([{ full_name: fullName, email: email }]);
+
+                if (error) throw error;
+
+                investorForm.innerHTML = `<p style="text-align: center; font-size: 1.1rem;">Thank you! We will be in touch shortly.</p>`;
+
+            } catch (error) {
+                alert('There was an error submitting your request. Please try again.');
+                console.error('Error inserting data into Supabase:', error);
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 
 </body>
