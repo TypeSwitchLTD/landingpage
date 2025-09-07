@@ -45,6 +45,7 @@
             width: 100%;
             scroll-snap-align: start;
             display: flex;
+            flex-direction: column; 
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
@@ -69,13 +70,14 @@
             background-position: center;
         }
 
-        .hero h1, .hero h2, .hero .hero-cta-wrapper {
+        .hero h1, .hero h2, .hero .hero-sub-stat, .hero .hero-cta-wrapper {
             animation: fadeIn 0.6s ease-out forwards;
             opacity: 0;
         }
         .hero h1 { animation-delay: 0.1s; }
         .hero h2 { animation-delay: 0.2s; }
-        .hero .hero-cta-wrapper { animation-delay: 0.3s; }
+        .hero .hero-sub-stat { animation-delay: 0.3s; }
+        .hero .hero-cta-wrapper { animation-delay: 0.4s; }
 
         .hero h1 {
             font-family: var(--font-headline);
@@ -91,11 +93,18 @@
             font-weight: 400;
             color: var(--text-light);
             max-width: 600px;
-            margin: 0 auto 2.5rem auto;
+            margin: 0 auto 0.5rem auto; 
+        }
+        
+        .hero .hero-sub-stat {
+             font-size: clamp(0.9rem, 2vw, 1.1rem);
+             font-weight: 500;
+             color: var(--accent-blue);
+             margin-bottom: 2.5rem;
         }
 
         .hero-cta-wrapper {
-            margin-top: 75px;
+            margin-top: 25px; 
         }
 
         .cta-button {
@@ -111,7 +120,7 @@
             box-shadow: 0 5px 20px rgba(0, 122, 255, 0.3);
         }
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 122, 255, 0.4); }
-        .hero .microcopy { margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
+        
         .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 40px; font-weight: 700; }
         .problems { background-color: var(--bg-secondary); }
         
@@ -185,79 +194,143 @@
         .unsuitable li::before { content: '–'; color: var(--text-light); }
         .unsuitable .witty-comment { color: var(--text-light); font-style: italic; font-size: 0.9em; }
 
-        .offer { background-color: var(--bg-secondary); }
+        .last-section-content { background-color: var(--bg-secondary); flex-grow: 1; width: 100%; display: flex; align-items: center; justify-content: center;}
         .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 40px; text-align: left; }
         .offer-card { background: var(--bg-main); border: 1px solid var(--border-color); padding: 30px; border-radius: 16px; }
         .offer-card__title { font-family: var(--font-headline); font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; color: var(--accent-blue); }
         .offer-card__description { color: var(--text-dark); font-size: 0.95rem; }
-        .social-proof { color: var(--text-light); margin-top: 2rem; }
-        .social-proof span { 
-            color: var(--accent-blue); 
-            font-weight: 700; 
-            font-size: 1.1rem;
-            display: inline-block;
-            min-width: 30px;
-            transition: all 0.3s ease;
-        }
         
-        /* Loading animation for counter */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
         
-        .social-proof span.loading {
+        .loading-state {
             animation: pulse 1s ease-in-out infinite;
         }
 
-        /* ----- STYLE CHANGES START HERE ----- */
-
-        /* This wrapper helps organize the main content and the footer within the section */
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            max-width: 1100px;
+        .investors-link {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background-color: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .investors-link:hover {
+            background-color: var(--text-dark);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
-        /* This makes the main container take up available space, pushing the footer down */
-        .content-wrapper .container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-bottom: 20px; /* Add some space above the footer */
+        .fomo-progress-bar {
+            max-width: 450px;
+            margin: 2rem auto 0 auto;
+        }
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar {
+            width: 0%; 
+            height: 100%;
+            background-color: var(--accent-green);
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .progress-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-align: left;
+        }
+        .progress-label span {
+            font-weight: 700;
         }
         
-        /* The new footer style */
+        .different {
+            background-color: var(--bg-main);
+        }
+        .different-text {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .different-text p {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+        .different-text .intro-text {
+            color: var(--text-light);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+        }
+        .different-text .conclusion {
+            margin-top: 2rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-family: var(--font-headline);
+        }
+
+        .final-cta-info {
+            margin-top: 2rem;
+        }
+
+        .social-proof {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+         .social-proof span { 
+            color: var(--accent-blue); 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            display: inline-block;
+            min-width: 30px;
+        }
+        .investor-pitch-link a {
+            color: var(--accent-blue);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .investor-pitch-link a:hover {
+            text-decoration: underline;
+        }
+        
         .page-footer {
-            flex-shrink: 0; /* Prevents the footer from shrinking */
-            background-color: var(--border-color); /* Slightly darker background as requested */
-            padding: 15px 20px;
+            flex-shrink: 0;
+            width: 100%;
+            padding: 20px;
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-light);
-            border-radius: 12px; /* A subtle rounding to match the design */
-            width: 100%;
-            margin: 0 auto;
+            background-color: var(--bg-secondary);
         }
-        
         .page-footer a {
             color: var(--text-light);
             text-decoration: none;
-            font-weight: 500;
         }
         .page-footer a:hover {
             color: var(--text-dark);
         }
         
-        /* ----- STYLE CHANGES END HERE ----- */
-        
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
-            .scroll-section { height: auto; min-height: 100vh; padding: 60px 20px; }
+            .scroll-section { height: auto; min-height: 100vh; padding: 80px 20px; }
             .scroll-container { scroll-snap-type: none; overflow: auto; }
             .audience-columns { grid-template-columns: 1fr; }
             
@@ -272,15 +345,14 @@
              .problem-card__header {
                 margin: 0;
             }
-
-            /* Adjust wrapper for mobile */
-            .content-wrapper .container {
-                padding-bottom: 40px; 
+            .investors-link {
+                top: 15px;
+                right: 15px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
-
             .page-footer {
-                margin-top: 20px; /* Give it some space on mobile */
-                padding: 20px;
+                margin-top: 20px;
             }
         }
     </style>
@@ -290,14 +362,21 @@
     <div class="scroll-container">
 
         <section class="scroll-section hero">
+            <a href="https://docsend.com/view/your-pitch-deck" target="_blank" class="investors-link">For Investors →</a>
             <div class="container">
                 <h1>Stop Fighting Your Keyboard.</h1>
                 <h2>Finally, a keyboard that keeps up with your multilingual brain.</h2>
+                <p class="hero-sub-stat">Join 2.3 Billion Multilingual Typists Who Need This</p>
                 <div class="hero-cta-wrapper">
                     <a href="https://form.typeswitch.io" class="cta-button">
-                        Become a Founding User & Get 25% Off
+                       First 200 Founding Users Get 30% Off
                     </a>
-                    <p class="microcopy">No commitment. Help shape the future of typing.</p>
+                    <div class="fomo-progress-bar">
+                         <p class="progress-label"><span id="spots-taken" class="loading-state">...</span>/200 Founding Spots Taken</p>
+                         <div class="progress-container">
+                             <div id="spots-progress-bar" class="progress-bar"></div>
+                         </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -306,7 +385,7 @@
             <div class="container">
                 <h2 class="section-title">Sound Familiar?</h2>
                 <div class="problems-grid">
-                    <div class="problem-card">
+                     <div class="problem-card">
                         <div class="problem-card__header"><span class="problem-card__icon">⚠️</span><h3 class="problem-card__title">The Wrong Language Glitch</h3></div>
                         <div class="problem-card__description"><p>You want to start an email with "Dear Daniel," but your fingers type<br><code>يثشق يشهثمو</code><br>You try to reply in your native language, but the letters appear in English. Oh no... switch, you delete, you lose your train of thought. Every. Single. Day. 10 times a day!</p></div>
                     </div>
@@ -361,8 +440,20 @@
             </div>
         </section>
         
-        <section class="scroll-section offer">
-            <div class="content-wrapper">
+        <section class="scroll-section different">
+            <div class="container">
+                <div class="different-text">
+                    <h2 class="section-title">Why We're Different</h2>
+                    <p class="intro-text">Most keyboards try to do everything and end up helping a few.<br>TypeSwitch is different. Instead of guessing what you need, we're asking.</p>
+                    <p>Instead of 20 features, we're building the <strong>right ones</strong> to solve your multilingual typing problems.</p>
+                    <p>Instead of another $300 gadget, we're creating an <strong>affordable solution</strong> that actually works for multilingual typists.</p>
+                    <p class="conclusion">Built with your input. For your needs. With style and quality. <br>Nothing more, nothing less.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="scroll-section">
+            <div class="last-section-content">
                 <div class="container">
                     <h2 class="section-title">Your Input is a Game-Changer.</h2>
                     <div class="offer-grid">
@@ -376,98 +467,86 @@
                         </div>
                         <div class="offer-card">
                             <h3 class="offer-card__title">A Worthy Thank You.</h3>
-                            <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 25% discount code.</p>
+                            <p class="offer-card__description">We truly value your expert input. For helping us build the perfect tool, you'll receive a guaranteed 30% discount code.</p>
                         </div>
                     </div>
                     <a href="https://form.typeswitch.io" class="cta-button">
-                        Take the 3-Minute Survey
+                        Take the 5-Minute Survey
                     </a>
-                    <p class="social-proof">
-                        Join the <span id="survey-count" class="loading">...</span> multilingual pros who have already completed the survey and helped shape our keyboard.
-                    </p>
+
+                    <div class="final-cta-info">
+                        <p class="social-proof">
+                            Join the <span id="survey-count" class="loading-state">...</span> multilingual pros who have already completed the survey.
+                        </p>
+                        <p class="investor-pitch-link" id="investors">
+                           Investors: Interested? <a href="https://docsend.com/view/your-pitch-deck" target="_blank">See our pitch deck →</a>
+                        </p>
+                    </div>
                 </div>
-                
-                <footer class="page-footer">
-                    © 2025 TypeSwitch Ltd. All rights reserved. | 
-                    Investors & Questions: <a href="mailto:michael@typeswitch.io">Michael@typeswitch.io</a>
-                </footer>
             </div>
-            </section>
+
+            <footer class="page-footer">
+                <p class="copyright">
+                     © 2025 TypeSwitch Ltd. All rights reserved. | 
+                    Contact: <a href="mailto:contact@typeswitch.io">contact@typeswitch.io</a>
+                </p>
+            </footer>
+        </section>
 
     </div>
 
     <script type="module">
-        // Supabase configuration
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
         
-        // Import Supabase client
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        
-        // Initialize Supabase client
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // Base count (starting from 60 as requested)
-        const BASE_COUNT = 60;
-        
-        // Function to update counter
+        const BASE_COUNT = 73; // Starting base
+        const FOUNDERS_GOAL = 200;
+
         async function updateSurveyCount() {
+            const spotsTakenEl = document.getElementById('spots-taken');
+            const progressBarEl = document.getElementById('spots-progress-bar');
+            const surveyCountEl = document.getElementById('survey-count');
+
             try {
-                // Get count of survey responses with discount codes (completed surveys)
                 const { count, error } = await supabase
                     .from('survey_responses')
                     .select('*', { count: 'exact', head: true })
                     .not('discount_code', 'is', null);
                 
                 if (error) {
-                    console.error('Error fetching count:', error);
-                    // Use fallback number if error
-                    document.getElementById('survey-count').textContent = '127';
-                    document.getElementById('survey-count').classList.remove('loading');
-                    return;
+                    throw error;
                 }
                 
-                // Calculate total with base count
                 const totalCount = BASE_COUNT + (count || 0);
                 
-                // Update the counter with animation
-                const counterElement = document.getElementById('survey-count');
-                counterElement.classList.remove('loading');
-                
-                // Animate the number change
-                const currentValue = parseInt(counterElement.textContent) || 0;
-                const targetValue = totalCount;
-                const increment = Math.ceil((targetValue - currentValue) / 20);
-                
-                if (currentValue !== targetValue) {
-                    let current = currentValue;
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= targetValue) {
-                            current = targetValue;
-                            clearInterval(timer);
-                        }
-                        counterElement.textContent = current;
-                    }, 50);
-                } else {
-                    counterElement.textContent = totalCount;
-                }
+                spotsTakenEl.textContent = totalCount;
+                spotsTakenEl.classList.remove('loading-state');
+                const progressPercentage = Math.min((totalCount / FOUNDERS_GOAL) * 100, 100);
+                progressBarEl.style.width = `${progressPercentage}%`;
+
+                surveyCountEl.textContent = totalCount;
+                surveyCountEl.classList.remove('loading-state');
                 
             } catch (err) {
-                console.error('Unexpected error:', err);
-                // Use fallback number if error
-                document.getElementById('survey-count').textContent = '127';
-                document.getElementById('survey-count').classList.remove('loading');
+                console.error('Error fetching count:', err);
+                // Fallback numbers
+                spotsTakenEl.textContent = '84';
+                progressBarEl.style.width = `${(84 / FOUNDERS_GOAL) * 100}%`;
+                surveyCountEl.textContent = '84';
+                spotsTakenEl.classList.remove('loading-state');
+                surveyCountEl.classList.remove('loading-state');
             }
         }
         
         // Update count on page load
         updateSurveyCount();
         
-        // Refresh count every 30 seconds
+        // Optional: Refresh count every 30 seconds
         setInterval(updateSurveyCount, 30000);
     </script>
 
 </body>
 </html>
-
