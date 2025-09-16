@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypeSwitch - Stop Fighting Your Keyboard</title>
+    <title>TypeSwitch - The Keyboard That Speaks Your Language</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;700&family=Arimo&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #FFFFFF;
@@ -16,13 +16,17 @@
             --accent-blue: #007AFF;
             --accent-green: #34C759;
             --border-color: #E5E7EB;
-
             --font-headline: 'Syne', sans-serif;
             --font-body: 'Inter', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
         body {
             background-color: var(--bg-main);
             color: var(--text-dark);
@@ -30,16 +34,8 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow: hidden;
         }
         
-        .scroll-container {
-            width: 100%;
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-        }
-
         .scroll-section {
             height: 100vh;
             width: 100%;
@@ -57,7 +53,7 @@
             max-width: 1100px;
             margin: 0 auto;
             text-align: center;
-            position: relative; /* Ensure content is on top of pseudo-elements */
+            position: relative;
             z-index: 2;
         }
 
@@ -84,7 +80,7 @@
         .hero h1 {
             font-family: var(--font-headline);
             font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: -2px;
             line-height: 1.1;
             margin-bottom: 1rem;
@@ -99,10 +95,10 @@
         }
         
         .hero .hero-sub-stat {
-             font-size: clamp(0.9rem, 2vw, 1.1rem);
-             font-weight: 500;
-             color: var(--accent-blue);
-             margin-bottom: 2.5rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 500;
+            color: var(--accent-blue);
+            margin-bottom: 2.5rem;
         }
 
         .hero-cta-wrapper {
@@ -127,7 +123,22 @@
         
         .hero .microcopy { margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
 
-        .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 40px; font-weight: 700; }
+        .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 25px; font-weight: 700; }
+        .section-intro {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+        }
+        .core-belief {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 1.3rem;
+            margin: 0 auto 25px auto;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+        
         .problems { background-color: var(--bg-secondary); }
         
         .problems-grid {
@@ -136,6 +147,16 @@
             gap: 20px;
             text-align: left;
             align-items: start;
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            text-align: left;
+            align-items: start;
+            max-width: 850px;
+            margin: 0 auto;
         }
 
         .problem-card {
@@ -147,6 +168,7 @@
             display: flex;
             flex-direction: column;
             min-height: 120px;
+            cursor: default;
         }
         .problem-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.07); }
         
@@ -173,6 +195,7 @@
         .problem-card__icon { font-size: 1.5rem; }
         .problem-card__title { font-family: var(--font-headline); font-size: 1.2rem; font-weight: 700; }
         .problem-card code { font-family: monospace; background-color: var(--border-color); color: var(--text-dark); padding: 2px 6px; border-radius: 4px; font-size: 0.95rem; }
+        .hebrew-font { font-family: 'Arimo', sans-serif; }
         
         .audience-columns {
             display: grid;
@@ -200,6 +223,11 @@
         .unsuitable li::before { content: '–'; color: var(--text-light); }
         .unsuitable .witty-comment { color: var(--text-light); font-style: italic; font-size: 0.9em; }
 
+        .last-section-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
         .last-section-content { background-color: var(--bg-secondary); flex-grow: 1; width: 100%; display: flex; align-items: center; justify-content: center;}
         .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 40px; text-align: left; }
         .offer-card { background: var(--bg-main); border: 1px solid var(--border-color); padding: 30px; border-radius: 16px; }
@@ -230,6 +258,7 @@
             transition: all 0.3s ease;
             border: 1px solid var(--border-color);
             cursor: pointer;
+            z-index: 10;
         }
         .investors-link:hover {
             background-color: var(--text-dark);
@@ -267,22 +296,23 @@
             font-weight: 700;
         }
         
-        /* ----- STYLE CHANGE FOR IMAGE ----- */
-        .different {
+        .different, .solution-section {
             position: relative;
             overflow: hidden;
         }
-        .different::before {
+        .different::before, .solution-section::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://i.ibb.co/zHHkLGKD/Copy-of-num-433.png');
             background-size: cover;
             background-position: center;
             transform: scale(1.5) rotate(15deg);
             z-index: 1;
+        }
+        .solution-section::before {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://i.ibb.co/zHHkLGKD/Copy-of-num-433.png');
         }
 
         .different-text {
@@ -291,14 +321,10 @@
             text-align: center;
         }
         .different-text p {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
             line-height: 1.5;
             margin-bottom: 1.5rem;
             color: var(--text-dark);
-        }
-        .different-text .intro-text {
-            color: var(--text-light);
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
         .different-text .conclusion {
             margin-top: 2rem;
@@ -384,6 +410,8 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             text-align: left;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-close {
@@ -455,13 +483,21 @@
         }
         .investor-form-fields.visible {
             opacity: 1;
-            max-height: 200px;
+            max-height: 220px;
         }
         
         @media (max-width: 768px) {
-            .scroll-section { height: auto; min-height: 100vh; padding: 80px 20px; }
-            .scroll-container { scroll-snap-type: none; overflow: auto; }
-            .audience-columns { grid-template-columns: 1fr; }
+            html {
+                scroll-snap-type: none;
+            }
+            .scroll-section, .last-section-wrapper { 
+                height: auto; 
+                min-height: 100vh; 
+                padding: 80px 20px; 
+            }
+            .audience-columns, .solution-grid { 
+                grid-template-columns: 1fr; 
+            }
             
             .problem-card {
                 min-height: auto;
@@ -474,13 +510,13 @@
              .problem-card__header {
                 margin: 0;
             }
-            .investors-link {
+             .investors-link {
                 top: 15px;
                 right: 15px;
                 padding: 6px 12px;
                 font-size: 0.8rem;
             }
-            .page-footer {
+             .page-footer {
                 margin-top: 20px;
             }
         }
@@ -488,141 +524,164 @@
 </head>
 <body>
 
-    <div class="scroll-container">
+    <section class="scroll-section hero">
+        <span class="investors-link" id="investors-button-top">For Investors →</span>
+        <div class="container">
+            <h1>The Keyboard That Speaks Your Language.</h1>
+            <h2>Finally, a keyboard that keeps up with your multilingual brain.</h2>
+            <p class="hero-sub-stat">Join 2.3 Billion Multilingual Typists Who Need This</p>
+            <div class="hero-cta-wrapper">
+                <a href="https://form.typeswitch.io" class="cta-button">
+                    Become a Founding User - Get up to 25% Off
+                </a>
+                <p class="microcopy">Get 15% off for the anonymous survey + an extra 10% when you leave your email.</p>
+                <div class="fomo-progress-bar">
+                    <p class="progress-label"><span id="spots-taken" class="loading-state">...</span>/200 Founding Spots Taken</p>
+                    <div class="progress-container">
+                        <div id="spots-progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section class="scroll-section hero">
-            <span class="investors-link" id="investors-button-top">For Investors →</span>
+    <section class="scroll-section problems">
+        <div class="container">
+            <h2 class="section-title">Sound Familiar?</h2>
+            <div class="problems-grid">
+                 <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">⚠️</span><h3 class="problem-card__title">The Wrong Language Glitch</h3></div>
+                    <div class="problem-card__description"><p>You want to start an email with "Hello Daniel," but your fingers type<br><code><span class="hebrew-font">יקךךם גשמןקך</span></code><br>because your keyboard is still set to Hebrew. You try to reply in Russian, but the letters appear in English. You sigh, switch, delete, and lose your train of thought.<span class="pain-point-emphasis">Every. Single. Day. 10 times a day!</span></p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">⚡️</span><h3 class="problem-card__title">The Alt-Key Hijack</h3></div>
+                    <div class="problem-card__description"><p>You try to switch languages, but your finger hits <code>Alt</code> a millisecond before <code>Shift</code>. Suddenly, you're not typing anymore. The app's menu bar is highlighted, your cursor is gone, and your flow is completely shattered.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🔍</span><h3 class="problem-card__title">The Symbol Hunt</h3></div>
+                    <div class="problem-card__description"><p>You need to type a formal Arabic phrase with vowels (Harakat), forcing you to hunt for <code>Shift+Q</code>, <code>Shift+A</code>, and <code>Shift+E</code> just for one word. You switch to Hebrew to end a sentence and type a <code><span class="hebrew-font">ץ</span></code> instead of a period. In Russian, the comma is hiding on the same key as the question mark. You're constantly breaking your flow just to type basic punctuation.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">👀</span><h3 class="problem-card__title">The Visual Mismatch</h3></div>
+                    <div class="problem-card__description"><p>Your brain is fighting your fingers. The Russian <code>В</code> looks like a <code>B</code> but lives on the <code>D</code> key. The Cyrillic <code>Н</code> is <code>N</code>, not <code>H</code>. The Hebrew <code><span class="hebrew-font">ס</span></code> (Samekh) looks like an <code>O</code>, and <code><span class="hebrew-font">ו</span></code> (Vav) looks like a <code>I</code>, causing constant typos.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🤯</span><h3 class="problem-card__title">The Flow Killer</h3></div>
+                    <div class="problem-card__description"><p>Type. Check. Wrong. Delete. Switch. Retype.<br>Mental momentum: gone.<br>Creative thought: interrupted.<br>Daily frustration: mounting.<br>Productivity: just imagine.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🔒</span><h3 class="problem-card__title">The Caps Lock Trap</h3></div>
+                    <div class="problem-card__description"><p>You hit <code>CAPS LOCK</code> by accident. Now, when you switch to Hebrew, it types in English. In Russian, you're stuck SHOUTING IN CYRILLIC. In Arabic, it does nothing until you switch back to English and realize your entire password was just typed in uppercase. The state is unpredictable, and the result is always frustration.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="scroll-section solution-section">
+        <div class="container">
+            <h2 class="section-title">Our Solution: The End of Multilingual Friction</h2>
+            <p class="section-intro">We built TypeSwitch on one core belief:</p>
+            <p class="core-belief">Your tools should be an extension of your thoughts, not a barrier to them.</p>
+            <p class="section-intro">Here’s how our principles translate into a seamless typing experience.</p>
+            <div class="solution-grid">
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">💡</span><h3 class="problem-card__title">Unmistakable Clarity</h3></div>
+                    <div class="problem-card__description"><p>By creating a direct, unambiguous link between your brain, eyes, and fingers, the language you're thinking in is the one you're typing in.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🎯</span><h3 class="problem-card__title">Intuitive Action</h3></div>
+                    <div class="problem-card__description"><p>We believe language switching should be a deliberate, easy action, not a clumsy shortcut that risks breaking your concentration.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🪄</span><h3 class="problem-card__title">Dynamic Matching</h3></div>
+                    <div class="problem-card__description"><p>Our system ensures the entire keyboard layout—including punctuation and symbols—dynamically matches your chosen language.</p></div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__header"><span class="problem-card__icon">🧠</span><h3 class="problem-card__title">Reduced Cognitive Load</h3></div>
+                    <div class="problem-card__description"><p>Our core goal is a true WYSIWYG (What You See Is What You Get) typing experience, helping you stay in a state of deep, uninterrupted flow.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="scroll-section audience">
+        <div class="container">
+            <h2 class="section-title">Is TypeSwitch Right For You?</h2>
+            <div class="audience-columns">
+                <div class="audience-column perfect">
+                    <h3>✅ Perfect for</h3>
+                    <ul>
+                        <li>Multilingual professionals & remote workers in global teams</li>
+                        <li>Anyone in international business (sales, support, etc.)</li>
+                        <li>People tired of daily language-switching frustrations</li>
+                        <li>Translators, content creators, and students</li>
+                        <li>Those needing clear visual cues (e.g., for ADHD)</li>
+                    </ul>
+                </div>
+                <div class="audience-column unsuitable">
+                    <h3>💡 Less suitable for</h3>
+                    <ul>
+                        <li>Single-language typists <span class="witty-comment">(there are simpler tools!)</span></li>
+                        <li>Casual users who barely touch a keyboard</li>
+                        <li>Mobile-only or voice-to-text primary users</li>
+                        <li>Happy with current setup <span class="witty-comment">(we're jealous!)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="scroll-section problems">
+        <div class="container">
+            <div class="different-text">
+                <h2 class="section-title">Why We're Different</h2>
+                <p>Most keyboards try to do everything and end up helping a few. <strong>Instead of guessing, we’re asking.</strong></p>
+                <p><strong>Instead of complex software</strong> that slows you down, we focus on smart, intuitive hardware. Our philosophy is a true Plug & Play experience—less drivers, less settings, more focus.</p>
+                <p><strong>Instead of 20 features,</strong> we’re building the <em>right ones</em> to solve your actual multilingual problems.</p>
+                <p class="conclusion">Built with your input. For your needs. Nothing more, nothing less.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="scroll-section last-section-wrapper">
+        <div class="last-section-content">
             <div class="container">
-                <h1>Stop Fighting Your Keyboard.</h1>
-                <h2>Finally, a keyboard that keeps up with your multilingual brain.</h2>
-                <p class="hero-sub-stat">Join 2.3 Billion Multilingual Typists Who Need This</p>
-                <div class="hero-cta-wrapper">
-                    <a href="https://form.typeswitch.io" class="cta-button">
-                       First 200 Founding Users Get 15% Off
-                    </a>
-                    <p class="microcopy">Survey is anonymous. Add your email for an extra 10% off!</p>
-                    <div class="fomo-progress-bar">
-                         <p class="progress-label"><span id="spots-taken" class="loading-state">...</span>/200 Founding Spots Taken</p>
-                         <div class="progress-container">
-                             <div id="spots-progress-bar" class="progress-bar"></div>
-                         </div>
+                <h2 class="section-title">Your Input is a Game-Changer.</h2>
+                <div class="offer-grid">
+                    <div class="offer-card">
+                        <h3 class="offer-card__title">Your Voice, Our Blueprint.</h3>
+                        <p class="offer-card__description">Your survey answers are the blueprint for the keyboard you've always wanted. Prioritize the features that matter most to YOU.</p>
+                    </div>
+                    <div class="offer-card">
+                        <h3 class="offer-card__title">Join the Inner Circle.</h3>
+                        <p class="offer-card__description">As a Founding User, you're part of the team. You'll get exclusive updates and be the first to own the final product.</p>
+                    </div>
+                    <div class="offer-card">
+                        <h3 class="offer-card__title">A Worthy Thank You.</h3>
+                        <p class="offer-card__description">Your expert input is invaluable. For completing the anonymous survey, you'll get a 15% discount. Want a total of 25% off? Just leave your email at the end.</p>
                     </div>
                 </div>
+                <a href="https://form.typeswitch.io" class="cta-button">
+                    Take the 5-Minute Survey
+                </a>
+                <div class="final-cta-info">
+                     <p class="social-proof">
+                        Join the <span id="survey-count" class="loading-state">...</span> multilingual pros who have already completed the survey.
+                    </p>
+                    <p class="investor-pitch-link">
+                        Investors: Interested? <span class="link-text" id="investors-button-bottom">See our pitch deck →</span>
+                    </p>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <section class="scroll-section problems">
-            <div class="container">
-                <h2 class="section-title">Sound Familiar?</h2>
-                <div class="problems-grid">
-                     <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">⚠️</span><h3 class="problem-card__title">The Wrong Language Glitch</h3></div>
-                        <div class="problem-card__description"><p>You want to start an email with "Hello Daniel," but your fingers type<br><code>יקךךם גשמןקך</code><br>because your keyboard is still set to Hebrew. You try to reply in Russian, but the letters appear in English. You sigh, switch, delete, and lose your train of thought.<span class="pain-point-emphasis">Every. Single. Day. 10 times a day!</span></p></div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">⚡️</span><h3 class="problem-card__title">The Alt-Key Hijack</h3></div>
-                        <div class="problem-card__description"><p>You try to switch languages, but your finger hits <code>Alt</code> a millisecond before <code>Shift</code>. Suddenly, you're not typing anymore. The app's menu bar is highlighted, your cursor is gone, and your flow is completely shattered.</p></div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">🔍</span><h3 class="problem-card__title">The Symbol Hunt</h3></div>
-                        <div class="problem-card__description"><p>You need to type a formal Arabic phrase with vowels (Harakat), forcing you to hunt for <code>Shift+Q</code>, <code>Shift+A</code>, and <code>Shift+E</code> just for one word. You switch to Hebrew to end a sentence and type a <code>ץ</code> instead of a period. In Russian, the comma is hiding on the same key as the question mark. You're constantly breaking your flow just to type basic punctuation.</p></div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">👀</span><h3 class="problem-card__title">The Visual Mismatch</h3></div>
-                        <div class="problem-card__description"><p>Your brain is fighting your fingers. The Russian <code>В</code> looks like a <code>B</code> but lives on the <code>D</code> key. The Cyrillic <code>Н</code> is <code>N</code>, not <code>H</code>. The Hebrew <code>ס</code> (Samekh) looks like an <code>O</code>, and <code>ו</code> (Vav) looks like a <code>I</code>, causing constant typos.</p></div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">🤯</span><h3 class="problem-card__title">The Flow Killer</h3></div>
-                        <div class="problem-card__description"><p>Type. Check. Wrong. Delete. Switch. Retype.<br>Mental momentum: gone.<br>Creative thought: interrupted.<br>Daily frustration: mounting.<br>Productivity: just imagine.</p></div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-card__header"><span class="problem-card__icon">🔒</span><h3 class="problem-card__title">The Caps Lock Trap</h3></div>
-                        <div class="problem-card__description"><p>You hit <code>CAPS LOCK</code> by accident. Now, when you switch to Hebrew, it types in English. In Russian, you're stuck SHOUTING IN CYRILLIC. In Arabic, it does nothing until you switch back to English and realize your entire password was just typed in uppercase. The state is unpredictable, and the result is always frustration.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="scroll-section audience">
-            <div class="container">
-                <h2 class="section-title">Is TypeSwitch Right For You?</h2>
-                <div class="audience-columns">
-                    <div class="audience-column perfect">
-                        <h3>✅ Perfect for</h3>
-                        <ul>
-                            <li>Multilingual professionals & remote workers in global teams</li>
-                            <li>Anyone in international business (sales, support, etc.)</li>
-                            <li>People tired of daily language-switching frustrations</li>
-                            <li>Translators, content creators, and students</li>
-                            <li>Those needing clear visual cues (e.g., for ADHD)</li>
-                        </ul>
-                    </div>
-                    <div class="audience-column unsuitable">
-                        <h3>💡 Less suitable for</h3>
-                        <ul>
-                            <li>Single-language typists <span class="witty-comment">(there are simpler tools!)</span></li>
-                            <li>Casual users who barely touch a keyboard</li>
-                            <li>Mobile-only or voice-to-text primary users</li>
-                            <li>Happy with current setup <span class="witty-comment">(we're jealous!)</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="scroll-section different">
-            <div class="container">
-                <div class="different-text">
-                    <h2 class="section-title">Why We're Different</h2>
-                    <p class="intro-text">Most keyboards try to do everything and end up helping a few.<br>TypeSwitch is different. Instead of guessing what you need, we're asking.</p>
-                    <p>Instead of 20 features, we're building the <strong>right ones</strong> to solve your multilingual typing problems.</p>
-                    <p>Instead of another $300 gadget, we're creating an <strong>affordable solution</strong> that actually works for multilingual typists.</p>
-                    <p class="conclusion">Built with your input. For your needs. With style and quality. <br>Nothing more, nothing less.</p>
-                </div>
-            </div>
-        </section>
-        
-        <section class="scroll-section">
-            <div class="last-section-content">
-                <div class="container">
-                    <h2 class="section-title">Your Input is a Game-Changer.</h2>
-                    <div class="offer-grid">
-                        <div class="offer-card">
-                            <h3 class="offer-card__title">Your Voice, Our Blueprint.</h3>
-                            <p class="offer-card__description">Your survey answers are the blueprint for the keyboard you've always wanted. Prioritize the features that matter most to YOU.</p>
-                        </div>
-                        <div class="offer-card">
-                            <h3 class="offer-card__title">Join the Inner Circle.</h3>
-                            <p class="offer-card__description">As a Founding User, you're part of the team. You'll get exclusive updates and be the first to own the final product.</p>
-                        </div>
-                        <div class="offer-card">
-                            <h3 class="offer-card__title">A Worthy Thank You.</h3>
-                            <p class="offer-card__description">Your expert input is invaluable. For completing the anonymous survey, you'll get a 15% discount. Want a total of 25% off? Just leave your email at the end.</p>
-                        </div>
-                    </div>
-                    <a href="https://form.typeswitch.io" class="cta-button">
-                        Take the 5-7 Minutes Survey
-                    </a>
-
-                    <div class="final-cta-info">
-                        <p class="social-proof">
-                            Join the <span id="survey-count" class="loading-state">...</span> multilingual pros who have already completed the survey.
-                        </p>
-                        <p class="investor-pitch-link">
-                           Investors: Interested? <span class="link-text" id="investors-button-bottom">See our pitch deck →</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="page-footer">
-                <p class="copyright">
-                     © 2025 TypeSwitch Ltd. All rights reserved. | 
-                    Contact: <a href="mailto:typeswitchltd@gmail.com">typeswitchltd@gmail.com</a>
-                </p>
-            </footer>
-        </section>
-    </div>
+        <footer class="page-footer">
+            <p class="copyright">
+                © 2025 TypeSwitch Ltd. All rights reserved. | 
+                Contact us by Mail: <a href="mailto:Typeswitchltd@gmail.com">Typeswitchltd@gmail.com</a>
+            </p>
+        </footer>
+    </section>
 
     <div class="modal-overlay" id="investor-modal">
         <div class="modal-content">
@@ -711,7 +770,6 @@
             investorDetailsFields.classList.remove('visible');
             document.getElementById('investor-form').reset();
             
-            // Restore form if it was replaced by success message
             const investorForm = document.getElementById('investor-form');
             if (!investorForm.querySelector('button')) {
                  investorForm.innerHTML = `
@@ -726,7 +784,6 @@
                         <input type="email" id="email-inner" name="email" required>
                         <button type="submit" class="cta-button">Send me info</button>
                     </div>`;
-                // Re-attach checkbox listener
                 document.getElementById('confirm-investment-range-inner').addEventListener('change', (event) => {
                      document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
                 });
@@ -795,6 +852,3 @@
 
 </body>
 </html>
-
-
-
