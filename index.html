@@ -123,18 +123,21 @@
         
         .hero .microcopy { margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
 
-        .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 25px; font-weight: 700; }
+        /* UPDATED: Reduced bottom margin for tighter spacing */
+        .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 15px; font-weight: 700; }
         .section-intro {
             font-size: 1.2rem;
             color: var(--text-dark);
             max-width: 800px;
-            margin: 0 auto 15px auto;
+            /* UPDATED: Reduced bottom margin */
+            margin: 0 auto 10px auto;
         }
         .core-belief {
             font-weight: 700;
             color: var(--accent-blue);
             font-size: 1.3rem;
-            margin: 0 auto 25px auto;
+            /* UPDATED: Reduced bottom margin */
+            margin: 0 auto 15px auto;
             max-width: 600px;
             line-height: 1.4;
         }
@@ -152,7 +155,8 @@
         .solution-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            /* UPDATED: Reduced gap for tighter grid */
+            gap: 15px;
             text-align: left;
             align-items: start;
             max-width: 850px;
@@ -312,6 +316,7 @@
             z-index: 1;
         }
         .solution-section::before {
+            /* REVERTED: Changed opacity back to 0.9 as requested */
             background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://i.ibb.co/zHHkLGKD/Copy-of-num-433.png');
         }
 
@@ -483,7 +488,7 @@
         }
         .investor-form-fields.visible {
             opacity: 1;
-            max-height: 220px;
+            max-height: 250px;
         }
         
         @media (max-width: 768px) {
@@ -707,13 +712,13 @@
         </div>
     </div>
 
-        <script type="module">
+    <script type="module">
         // Supabase Client Setup
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            
+        
         // Counter Logic
         const BASE_COUNT = 22;
         const FOUNDERS_GOAL = 200;
@@ -725,7 +730,7 @@
 
             try {
                 const { count, error } = await supabase
-                    .from('survey_responses')
+                    .from('survey_responses_v2')
                     .select('*', { count: 'exact', head: true })
                     .not('discount_code', 'is', null);
                 
@@ -743,7 +748,7 @@
                 
             } catch (err) {
                 console.error('Error fetching count:', err);
-                const fallbackCount = 84;
+                const fallbackCount = 84; // Fallback value in case of an error
                 spotsTakenEl.textContent = fallbackCount;
                 progressBarEl.style.width = `${(fallbackCount / FOUNDERS_GOAL) * 100}%`;
                 surveyCountEl.textContent = fallbackCount;
@@ -766,11 +771,13 @@
         function openModal(e) {
             e.preventDefault();
             investorModal.style.display = 'flex';
+            // Reset form state on open
+            document.getElementById('investor-form').reset();
             confirmCheckbox.checked = false;
             investorDetailsFields.classList.remove('visible');
-            document.getElementById('investor-form').reset();
             
             const investorForm = document.getElementById('investor-form');
+            // Ensure the form content is intact if it was replaced by a success message
             if (!investorForm.querySelector('button')) {
                  investorForm.innerHTML = `
                     <div class="checkbox-container">
@@ -784,8 +791,9 @@
                         <input type="email" id="email-inner" name="email" required>
                         <button type="submit" class="cta-button">Send me info</button>
                     </div>`;
+                // Re-attach the event listener to the new checkbox
                 document.getElementById('confirm-investment-range-inner').addEventListener('change', (event) => {
-                     document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
+                    document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
                 });
             }
         }
@@ -811,8 +819,8 @@
         investorForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             
+            // Check the correct, possibly dynamically created, checkbox
             const internalCheckbox = document.getElementById('confirm-investment-range') || document.getElementById('confirm-investment-range-inner');
-
             if (!internalCheckbox.checked) {
                 alert('Please confirm you understand the investment range.');
                 return;
@@ -847,10 +855,9 @@
     </script>
     
     <script>
+        // Disable right-click context menu
         document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 
 </body>
 </html>
-
-
