@@ -587,7 +587,7 @@
             <h2 class="section-title">Our Solution: The End of Multilingual Friction</h2>
             <p class="section-intro">We built TypeSwitch on one core belief:</p>
             <p class="core-belief">Your tools should be an extension of your thoughts, not a barrier to them.</p>
-            <p class="section-intro">Here’s how our principles translate into a seamless typing experience.</p>
+            <p class="section-intro">Here's how our principles translate into a seamless typing experience.</p>
             <div class="solution-grid">
                 <div class="problem-card">
                     <div class="problem-card__header"><span class="problem-card__icon">💡</span><h3 class="problem-card__title">Unmistakable Clarity</h3></div>
@@ -640,9 +640,9 @@
         <div class="container">
             <div class="different-text">
                 <h2 class="section-title">Why We're Different</h2>
-                <p>Most keyboards try to do everything and end up helping a few. <strong>Instead of guessing, we’re asking.</strong></p>
+                <p>Most keyboards try to do everything and end up helping a few. <strong>Instead of guessing, we're asking.</strong></p>
                 <p><strong>Instead of complex software</strong> that slows you down, we focus on smart, intuitive hardware. Our philosophy is a true Plug & Play experience—less drivers, less settings, more focus.</p>
-                <p><strong>Instead of 20 features,</strong> we’re building the <em>right ones</em> to solve your actual multilingual problems.</p>
+                <p><strong>Instead of 20 features,</strong> we're building the <em>right ones</em> to solve your actual multilingual problems.</p>
                 <p class="conclusion">Built with your input. For your needs. Nothing more, nothing less.</p>
             </div>
         </div>
@@ -712,12 +712,15 @@
         </div>
     </div>
 
-    <script type="module">
+    <!-- Supabase Library (UMD) -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <script>
         // Supabase Client Setup
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         // Counter Logic
         const BASE_COUNT = 22;
@@ -729,7 +732,7 @@
             const surveyCountEl = document.getElementById('survey-count');
 
             try {
-                const { count, error } = await supabase
+                const { count, error } = await supabaseClient
                     .from('survey_responses_v2')
                     .select('*', { count: 'exact', head: true })
                     .not('discount_code', 'is', null);
@@ -748,7 +751,7 @@
                 
             } catch (err) {
                 console.error('Error fetching count:', err);
-                const fallbackCount = 84; // Fallback value in case of an error
+                const fallbackCount = 84;
                 spotsTakenEl.textContent = fallbackCount;
                 progressBarEl.style.width = `${(fallbackCount / FOUNDERS_GOAL) * 100}%`;
                 surveyCountEl.textContent = fallbackCount;
@@ -771,13 +774,11 @@
         function openModal(e) {
             e.preventDefault();
             investorModal.style.display = 'flex';
-            // Reset form state on open
             document.getElementById('investor-form').reset();
             confirmCheckbox.checked = false;
             investorDetailsFields.classList.remove('visible');
             
             const investorForm = document.getElementById('investor-form');
-            // Ensure the form content is intact if it was replaced by a success message
             if (!investorForm.querySelector('button')) {
                  investorForm.innerHTML = `
                     <div class="checkbox-container">
@@ -791,7 +792,6 @@
                         <input type="email" id="email-inner" name="email" required>
                         <button type="submit" class="cta-button">Send me info</button>
                     </div>`;
-                // Re-attach the event listener to the new checkbox
                 document.getElementById('confirm-investment-range-inner').addEventListener('change', (event) => {
                     document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
                 });
@@ -819,7 +819,6 @@
         investorForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             
-            // Check the correct, possibly dynamically created, checkbox
             const internalCheckbox = document.getElementById('confirm-investment-range') || document.getElementById('confirm-investment-range-inner');
             if (!internalCheckbox.checked) {
                 alert('Please confirm you understand the investment range.');
@@ -837,7 +836,7 @@
             const email = formData.get('email');
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('investor_leads')
                     .insert([{ full_name: fullName, email: email }]);
 
@@ -861,5 +860,3 @@
 
 </body>
 </html>
-
-
