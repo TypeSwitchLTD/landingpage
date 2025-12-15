@@ -123,20 +123,17 @@
         
         .hero .microcopy { margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
 
-        /* UPDATED: Reduced bottom margin for tighter spacing */
         .section-title { font-family: var(--font-headline); font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 15px; font-weight: 700; }
         .section-intro {
             font-size: 1.2rem;
             color: var(--text-dark);
             max-width: 800px;
-            /* UPDATED: Reduced bottom margin */
             margin: 0 auto 10px auto;
         }
         .core-belief {
             font-weight: 700;
             color: var(--accent-blue);
             font-size: 1.3rem;
-            /* UPDATED: Reduced bottom margin */
             margin: 0 auto 15px auto;
             max-width: 600px;
             line-height: 1.4;
@@ -155,7 +152,6 @@
         .solution-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            /* UPDATED: Reduced gap for tighter grid */
             gap: 15px;
             text-align: left;
             align-items: start;
@@ -316,7 +312,6 @@
             z-index: 1;
         }
         .solution-section::before {
-            /* REVERTED: Changed opacity back to 0.9 as requested */
             background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://i.ibb.co/zHHkLGKD/Copy-of-num-433.png');
         }
 
@@ -491,6 +486,15 @@
             max-height: 250px;
         }
         
+        .success-message {
+            display: none;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--accent-green);
+            padding: 20px 0;
+            font-weight: 500;
+        }
+        
         @media (max-width: 768px) {
             html {
                 scroll-snap-type: none;
@@ -587,7 +591,7 @@
             <h2 class="section-title">Our Solution: The End of Multilingual Friction</h2>
             <p class="section-intro">We built TypeSwitch on one core belief:</p>
             <p class="core-belief">Your tools should be an extension of your thoughts, not a barrier to them.</p>
-            <p class="section-intro">Here's how our principles translate into a seamless typing experience.</p>
+            <p class="section-intro">Here’s how our principles translate into a seamless typing experience.</p>
             <div class="solution-grid">
                 <div class="problem-card">
                     <div class="problem-card__header"><span class="problem-card__icon">💡</span><h3 class="problem-card__title">Unmistakable Clarity</h3></div>
@@ -640,9 +644,9 @@
         <div class="container">
             <div class="different-text">
                 <h2 class="section-title">Why We're Different</h2>
-                <p>Most keyboards try to do everything and end up helping a few. <strong>Instead of guessing, we're asking.</strong></p>
+                <p>Most keyboards try to do everything and end up helping a few. <strong>Instead of guessing, we’re asking.</strong></p>
                 <p><strong>Instead of complex software</strong> that slows you down, we focus on smart, intuitive hardware. Our philosophy is a true Plug & Play experience—less drivers, less settings, more focus.</p>
-                <p><strong>Instead of 20 features,</strong> we're building the <em>right ones</em> to solve your actual multilingual problems.</p>
+                <p><strong>Instead of 20 features,</strong> we’re building the <em>right ones</em> to solve your actual multilingual problems.</p>
                 <p class="conclusion">Built with your input. For your needs. Nothing more, nothing less.</p>
             </div>
         </div>
@@ -693,34 +697,39 @@
             <span class="modal-close" id="modal-close-button">&times;</span>
             <h3>For Investors</h3>
             <p>We're seeking $30k-$150k to finalize development and launch. If you're interested in backing the future of multilingual typing, we'd love to share more details.</p>
-            <form class="modal-form" id="investor-form">
-                <div class="checkbox-container">
-                    <input type="checkbox" id="confirm-investment-range">
-                    <label for="confirm-investment-range">I confirm I understand the investment range of $30k-$150k is required.</label>
-                </div>
-                
-                <div class="investor-form-fields" id="investor-details-fields">
-                    <label for="full-name">Full Name</label>
-                    <input type="text" id="full-name" name="name" required>
+            
+            <div id="investor-success-message" class="success-message">
+                <p>Thank you! We will be in touch shortly.</p>
+            </div>
+
+            <div id="investor-form-container">
+                <form class="modal-form" id="investor-form">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="confirm-investment-range">
+                        <label for="confirm-investment-range">I confirm I understand the investment range of $30k-$150k is required.</label>
+                    </div>
                     
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                    
-                    <button type="submit" class="cta-button">Send me info</button>
-                </div>
-            </form>
+                    <div class="investor-form-fields" id="investor-details-fields">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" name="name" required>
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <button type="submit" class="cta-button">Send me info</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Supabase Library (UMD) - jsDelivr with full path -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
-    
-    <script>
-        // Supabase Client Setup
+    <script type="module">
+        // FIX: Using a pinned, stable version of Supabase JS to avoid the CDN/Wrapper error
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm';
+        
         const SUPABASE_URL = 'https://raagydwyruvrayaclgbu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhYWd5ZHd5cnV2cmF5YWNsZ2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxNTE0MDEsImV4cCI6MjA3MTcyNzQwMX0.ZgivHwYwPvqgayTPMoXNWiTH3lzizJ7boJrYV7NpMtY';
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         // Counter Logic
         const BASE_COUNT = 22;
@@ -732,10 +741,10 @@
             const surveyCountEl = document.getElementById('survey-count');
 
             try {
-                const { count, error } = await supabaseClient
+                // Modified: Count ALL rows, removed the 'discount_code' filter
+                const { count, error } = await supabase
                     .from('survey_responses_v2')
-                    .select('*', { count: 'exact', head: true })
-                    .not('discount_code', 'is', null);
+                    .select('*', { count: 'exact', head: true });
                 
                 if (error) throw error;
                 
@@ -751,7 +760,8 @@
                 
             } catch (err) {
                 console.error('Error fetching count:', err);
-                const fallbackCount = 84;
+                // Fallback executes if Supabase fails or network is down
+                const fallbackCount = 84; 
                 spotsTakenEl.textContent = fallbackCount;
                 progressBarEl.style.width = `${(fallbackCount / FOUNDERS_GOAL) * 100}%`;
                 surveyCountEl.textContent = fallbackCount;
@@ -760,6 +770,7 @@
             }
         }
         
+        // Initial call and Interval
         updateSurveyCount();
         setInterval(updateSurveyCount, 30000);
 
@@ -770,31 +781,27 @@
         const closeBtn = document.getElementById('modal-close-button');
         const confirmCheckbox = document.getElementById('confirm-investment-range');
         const investorDetailsFields = document.getElementById('investor-details-fields');
+        const investorForm = document.getElementById('investor-form');
+        const formContainer = document.getElementById('investor-form-container');
+        const successMessage = document.getElementById('investor-success-message');
 
         function openModal(e) {
             e.preventDefault();
             investorModal.style.display = 'flex';
-            document.getElementById('investor-form').reset();
-            confirmCheckbox.checked = false;
+            
+            // Logic change: Reset visibility instead of recreating HTML
+            formContainer.style.display = 'block';
+            successMessage.style.display = 'none';
+            
+            // Reset form fields
+            investorForm.reset();
             investorDetailsFields.classList.remove('visible');
             
-            const investorForm = document.getElementById('investor-form');
-            if (!investorForm.querySelector('button')) {
-                 investorForm.innerHTML = `
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="confirm-investment-range-inner">
-                        <label for="confirm-investment-range-inner">I confirm I understand the investment range of $30k-$150k is required.</label>
-                    </div>
-                    <div class="investor-form-fields" id="investor-details-fields-inner">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name-inner" name="name" required>
-                        <label for="email">Email</label>
-                        <input type="email" id="email-inner" name="email" required>
-                        <button type="submit" class="cta-button">Send me info</button>
-                    </div>`;
-                document.getElementById('confirm-investment-range-inner').addEventListener('change', (event) => {
-                    document.getElementById('investor-details-fields-inner').classList.toggle('visible', event.target.checked);
-                });
+            // Reset button text in case it was left as "Sending..."
+            const submitButton = investorForm.querySelector('button[type="submit"]');
+            if(submitButton) {
+                submitButton.textContent = 'Send me info';
+                submitButton.disabled = false;
             }
         }
 
@@ -815,12 +822,10 @@
             investorDetailsFields.classList.toggle('visible', confirmCheckbox.checked);
         });
 
-        const investorForm = document.getElementById('investor-form');
         investorForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             
-            const internalCheckbox = document.getElementById('confirm-investment-range') || document.getElementById('confirm-investment-range-inner');
-            if (!internalCheckbox.checked) {
+            if (!confirmCheckbox.checked) {
                 alert('Please confirm you understand the investment range.');
                 return;
             }
@@ -836,13 +841,15 @@
             const email = formData.get('email');
 
             try {
-                const { error } = await supabaseClient
+                const { error } = await supabase
                     .from('investor_leads')
                     .insert([{ full_name: fullName, email: email }]);
 
                 if (error) throw error;
 
-                investorForm.innerHTML = `<p style="text-align: center; font-size: 1.1rem;">Thank you! We will be in touch shortly.</p>`;
+                // Success: Hide form, Show success message
+                formContainer.style.display = 'none';
+                successMessage.style.display = 'block';
 
             } catch (error) {
                 alert('There was an error submitting your request. Please try again.');
