@@ -1,0 +1,76 @@
+# TypeSwitch - robots.txt (Updated April 2026)
+# Strategy: Allow everything - maximum AI visibility
+
+User-agent: *
+Allow: /
+
+Sitemap: https://typeswitch.io/sitemap.xml
+
+# ——— OPENAI ———
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ChatGPT-User/2.0
+Allow: /
+
+# ——— ANTHROPIC ———
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# ——— GOOGLE ———
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Gemini-Deep-Research
+Allow: /
+
+User-agent: Google-NotebookLM
+Allow: /
+
+User-agent: Google-Agent
+Allow: /
+
+# ——— PERPLEXITY ———
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ——— META ———
+User-agent: meta-externalagent
+Allow: /
+
+# ——— APPLE ———
+User-agent: Applebot-Extended
+Allow: /
+
+# ——— MICROSOFT ———
+User-agent: Bingbot
+Allow: /
+
+# ——— xAI (Grok) ———
+User-agent: Grok
+Allow: /
+
+# ——— MISTRAL ———
+User-agent: MistralAI-User
+Allow: /
