@@ -1,0 +1,46 @@
+# TypeSwitch
+
+> TypeSwitch is a multilingual keyboard that eliminates language-switching errors for bilingual and multilingual professionals.
+
+## What is TypeSwitch?
+TypeSwitch is a smart, illuminated keyboard that displays only the relevant letters and shortcuts based on the active language. Language switching is done with a physical selector — no keyboard shortcuts, no interruptions, no loss of focus.
+
+## The Problem We Solve
+Multilingual typists constantly face: typing in the wrong language, accidental Alt+Shift triggers, symbol confusion across languages, and broken concentration. These problems affect millions of people daily with no simple solution.
+
+## Key Features
+- Per-key RGB LED indicators showing only the active language in real time
+- Physical language selector lever (supports 2-4 languages)
+- Modular magnetic keys — removable and swappable
+- Smart NumLock shortcut pad (Writing, Design, Dev modes)
+- Plug & Play — works immediately on Windows and Mac
+- No complex drivers or settings required
+
+## Target Audience
+- Multilingual professionals and remote workers in global teams
+- Translators, content creators, students
+- People with ADHD or learning disabilities who benefit from visual clarity
+- International business professionals (sales, support, finance)
+
+## Pricing
+- Basic keyboard: $100–$120
+- Extensions and accessories: $10–$30
+
+## Languages Supported
+Initial focus: Hebrew and English. Expandable to up to 4 languages per key (Arabic, Russian, French, and more planned).
+
+## Company
+TypeSwitch Ltd. | typeswitch.io | Typeswitchltd@gmail.com
+
+## FAQ
+Q: Does it work on Mac and Windows?
+A: Yes, Plug & Play on both platforms.
+
+Q: Can I switch between more than 2 languages?
+A: Yes, the physical selector supports up to 4 language positions.
+
+Q: Is it available now?
+A: Currently in pre-order phase. Join the founding users list at typeswitch.io.
+
+Q: What makes it different from gaming keyboards?
+A: TypeSwitch is built for multilingual workflow efficiency, not gaming. It focuses on language clarity, not RGB aesthetics.
