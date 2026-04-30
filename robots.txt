@@ -1,5 +1,5 @@
-# TypeSwitch - robots.txt (Updated April 2026)
-# Strategy: Allow everything - maximum AI visibility
+# robots.txt – TypeSwitch (Updated April 2026)
+# Strategy: Maximum AI visibility
 
 User-agent: *
 Allow: /
@@ -33,10 +33,10 @@ User-agent: anthropic-ai
 Allow: /
 
 # ——— GOOGLE ———
-User-agent: Google-Extended
+User-agent: Googlebot
 Allow: /
 
-User-agent: Googlebot
+User-agent: Google-Extended
 Allow: /
 
 User-agent: Gemini-Deep-Research
@@ -48,6 +48,9 @@ Allow: /
 User-agent: Google-Agent
 Allow: /
 
+User-agent: GoogleAgent-URLContext
+Allow: /
+
 # ——— PERPLEXITY ———
 User-agent: PerplexityBot
 Allow: /
@@ -56,15 +59,22 @@ User-agent: Perplexity-User
 Allow: /
 
 # ——— META ———
+User-agent: FacebookBot
+Allow: /
+
 User-agent: meta-externalagent
+Allow: /
+
+# ——— MICROSOFT ———
+User-agent: bingbot
 Allow: /
 
 # ——— APPLE ———
 User-agent: Applebot-Extended
 Allow: /
 
-# ——— MICROSOFT ———
-User-agent: Bingbot
+# ——— AMAZON ———
+User-agent: Amazonbot
 Allow: /
 
 # ——— xAI (Grok) ———
@@ -73,4 +83,20 @@ Allow: /
 
 # ——— MISTRAL ———
 User-agent: MistralAI-User
+Allow: /
+
+# ——— DUCKDUCKGO ———
+User-agent: DuckAssistBot
+Allow: /
+
+# ——— YOU.COM ———
+User-agent: YouBot
+Allow: /
+
+# ——— COHERE ———
+User-agent: cohere-ai
+Allow: /
+
+# ——— COMMON CRAWL ———
+User-agent: CCBot
 Allow: /
